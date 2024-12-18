@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <style>
+        table, th, td, tr {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+    </style>
+
+  </head>
+  <body>
+    <h1>Listado de Productos</h1>
+    <div>
+      <a href="formNewProduct">
+        <button>Nuevo Producto</button>
+      </a>
+      <a href="productTypes">
+        <button>Tipos de Producto</button>
+      </a>
+
+      <table th:if="${productos.size() != 0}">
+        <thead>
+            <th th:each="atributo: ${atributos}" th:text="${atributo}"></th>
+        </thead>
+        <tbody>
+            <tr th:each="producto: ${productos}">
+                <td th:text="${producto.name}"></td>
+            </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p th:if="${productos.size() == 0}">HOla</p>
+    
+  </body>
+</html>
