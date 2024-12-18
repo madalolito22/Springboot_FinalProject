@@ -6,4 +6,8 @@ public class Product {
     private String name;
     private Long price;
 
+    public Long priceWithTaxes(){
+        return 2L;
+    }
+
 }
