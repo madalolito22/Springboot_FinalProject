@@ -7,8 +7,13 @@
 
     <style>
         table, th, td, tr {
+          text-align: center;
             border: 1px solid black;
             border-collapse: collapse;
+            padding: 10px;
+        }
+        table{
+          width: 100%;
         }
     </style>
 
@@ -29,13 +34,25 @@
         </thead>
         <tbody>
             <tr th:each="producto: ${productos}">
+                <td th:text="${producto.id}"></td>
                 <td th:text="${producto.name}"></td>
+                <td th:text="${producto.name}"></td>
+                <td th:text="${producto.price}"></td>
+                <td th:text="${producto.priceWithTaxes}"></td>
+                <td>
+                  <a href="formNewProduct" th:text="${'Editar'}">
+                    Editar
+                  </a><span>|</span>
+                  <a href="">
+                    Eliminar
+                  </a>
+                </td>
             </tr>
         </tbody>
       </table>
     </div>
 
-    <p th:if="${productos.size() == 0}">HOla</p>
+    <p th:if="${productos.size() == 0}">Hola</p>
     
   </body>
 </html>

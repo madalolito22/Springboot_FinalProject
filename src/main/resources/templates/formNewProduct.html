@@ -4,6 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Nuevo Producto</title>
+
+    <style>
+      label, input{
+        margin-bottom: 10px;
+      }
+    </style>
+
   </head>
   <body>
     <form
@@ -14,12 +21,13 @@
     >
         <label for="id">Id:</label>
         <input type="text" th:field="*{id}" name="id" id="id">
+        <br>
         <label for="nombre">Nombre:</label>
         <input type="text" th:field="*{name}" name="nombre" id="nombre">
+        <br>
         <label for="precio">Precio:</label>
         <input type="text" th:field="*{price}" name="precio" id="precio">
-        <label for="precio">Precio:</label>
-        <input type="text" th:field="*{priceWithTaxes}" name="priceWithTaxes" id="priceWithTaxes">
+        <br>
         <button type="submit" id="enviarBoton">Crear Producto</button>
     </form>
   </body>

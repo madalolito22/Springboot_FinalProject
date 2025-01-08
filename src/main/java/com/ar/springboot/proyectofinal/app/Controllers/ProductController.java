@@ -3,18 +3,22 @@ package com.ar.springboot.proyectofinal.app.Controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 
 import com.ar.springboot.proyectofinal.app.Model.Product;
-import org.springframework.web.bind.annotation.PostMapping;
+import com.ar.springboot.proyectofinal.app.Services.ProductServiceImpl;
 
 @Controller
 public class ProductController {
 
-    List<Product> productos = anyadirProductos();
+    private ProductServiceImpl service;
+
+    public ProductController(ProductServiceImpl service) {
+        this.service = service;
+    }
 
     @GetMapping("/products")
     public String mostrarProductos(Model model) {
@@ -22,21 +26,21 @@ public class ProductController {
         List<String> atributos = anyadirAntributos();
 
         model.addAttribute("atributos", atributos);
-        model.addAttribute("productos", productos);
+        model.addAttribute("productos", service.findAll());
 
         return "products";
     }
 
     @GetMapping("/formNewProduct")
     public String formNewProduct(Model model) {
-        model.addAttribute("producto", new Product(null, null, null));
+        model.addAttribute("producto", new Product(1L, "null", 1L));
         return "formNewProduct";
     }
 
-    @PostMapping("/formPostNewProduct")
-    public void formNewProductPost(@ModelAttribute Product product) {
-        productos.add(product);
-    }
+    // @PostMapping("/formPostNewProduct")
+    // public void formNewProductPost(@ModelAttribute Product product) {
+    //     productos.add(product);
+    // }
 
     private List<Product> anyadirProductos() {
         List<Product> productos= new ArrayList<Product>();
