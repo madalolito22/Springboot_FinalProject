@@ -51,7 +51,7 @@ public class Product {
     }
 
     private String productTypeName(){
-        return repository.
+        return "hoa";
     }
 
     @Override
