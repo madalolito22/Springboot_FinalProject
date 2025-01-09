@@ -12,6 +12,7 @@ import com.ar.springboot.proyectofinal.app.Repositories.ProductRepositoryImpl;
 @Service
 public class ProductServiceImpl implements ProductServiceInt{
 
+    @Autowired
     private ProductRepositoryImpl repository;
 
     @Autowired
@@ -19,12 +20,10 @@ public class ProductServiceImpl implements ProductServiceInt{
         this.repository = repository;
     }
 
-    public List<Product> findAll(){
+    public List<Product> findAll() {
         return repository.findAll().stream().map(p -> {
-            Double priceImp = p.getPrice()*1.21d;
-            Product newProd = (Product) p.clone();
-            p.setPrice(priceImp.longValue());
-            return newProd;
+            p.priceWithTaxes();
+            return p;
         }).collect(Collectors.toList());
     }
 
@@ -33,19 +32,20 @@ public class ProductServiceImpl implements ProductServiceInt{
     }
 
     @Override
-    public Product create(Long id, String name, Long price) {
-        return new Product(id, name, price);
-    }
-
-    @Override
-    public Product update(Long id) {
-        return repository.findById(id);
+    public void create(Long id, String name, Long price) {
+        Product newProduct = new Product(id, name, price);
+        repository.save(newProduct);
     }
 
     @Override
     public void delete(Long id) {
-        repository.productos.remove(repository.findById(id));
+        repository.delete(repository.findById(id));
     }
 
-    
+    @Override
+    public void update(Long id, String name, Long price) {
+        repository.findById(id).setPrice(price);
+        repository.findById(id).setName(name);
+    }
+
 }

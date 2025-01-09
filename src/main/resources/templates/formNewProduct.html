@@ -6,29 +6,31 @@
     <title>Nuevo Producto</title>
 
     <style>
-      label, input{
+      label,
+      input {
         margin-bottom: 10px;
       }
     </style>
-
   </head>
   <body>
+    <h1>Nuevo Producto</h1>
+
     <form
       action="#"
       th:action="@{/formPostNewProduct}"
       th:object="${producto}"
       method="post"
     >
-        <label for="id">Id:</label>
-        <input type="text" th:field="*{id}" name="id" id="id">
-        <br>
-        <label for="nombre">Nombre:</label>
-        <input type="text" th:field="*{name}" name="nombre" id="nombre">
-        <br>
-        <label for="precio">Precio:</label>
-        <input type="text" th:field="*{price}" name="precio" id="precio">
-        <br>
-        <button type="submit" id="enviarBoton">Crear Producto</button>
+      <label for="id">Id:</label>
+      <input type="text" th:field="*{id}" name="id" id="id" />
+      <br />
+      <label for="nombre">Nombre:</label>
+      <input type="text" th:field="*{name}" name="nombre" id="nombre" />
+      <br />
+      <label for="precio">Precio:</label>
+      <input type="text" th:field="*{price}" name="precio" id="precio" />
+      <br />
+      <button type="submit" id="enviarBoton">Crear Producto</button>
     </form>
   </body>
 </html>

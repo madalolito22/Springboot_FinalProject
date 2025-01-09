@@ -3,10 +3,12 @@ package com.ar.springboot.proyectofinal.app.Controllers;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ar.springboot.proyectofinal.app.Model.Product;
 import com.ar.springboot.proyectofinal.app.Services.ProductServiceImpl;
@@ -14,6 +16,7 @@ import com.ar.springboot.proyectofinal.app.Services.ProductServiceImpl;
 @Controller
 public class ProductController {
 
+    List<String> atributos = anyadirAntributos();
     private ProductServiceImpl service;
 
     public ProductController(ProductServiceImpl service) {
@@ -23,8 +26,6 @@ public class ProductController {
     @GetMapping("/products")
     public String mostrarProductos(Model model) {
 
-        List<String> atributos = anyadirAntributos();
-
         model.addAttribute("atributos", atributos);
         model.addAttribute("productos", service.findAll());
 
@@ -33,14 +34,48 @@ public class ProductController {
 
     @GetMapping("/formNewProduct")
     public String formNewProduct(Model model) {
-        model.addAttribute("producto", new Product(1L, "null", 1L));
+
+        model.addAttribute("producto", new Product(1L, "", 1L));
         return "formNewProduct";
     }
 
-    // @PostMapping("/formPostNewProduct")
-    // public void formNewProductPost(@ModelAttribute Product product) {
-    //     productos.add(product);
-    // }
+    @PostMapping("/formPostNewProduct")
+    public String formNewProductPost(@ModelAttribute Product product, Model model) {
+
+        service.create(product.getId(), product.getName(), product.getPrice());
+
+        model.addAttribute("atributos", atributos);
+        model.addAttribute("productos", service.findAll());
+
+        return "redirect:/products";
+
+    }
+
+    @GetMapping("/formEditProduct")
+    public String formEditProduct(@RequestParam("id") Long id, Model model) {
+        Product product = service.findById(id);
+
+        model.addAttribute("producto", product);
+
+        return "formEditProduct";
+    }
+
+    @PostMapping("/saveProduct")
+    public String saveProduct(@ModelAttribute Product product) {
+        service.update(product.getId(), product.getName(), product.getPrice());
+
+        return "redirect:/products";
+    }
+
+    @GetMapping("/deleteProduct")
+    public String deleteProduct(@RequestParam("id") Long id, Model model) {
+
+        Product product = service.findById(id);
+
+        service.delete(product.getId());
+
+        return "redirect:/products";
+    }
 
     private List<String> anyadirAntributos() {
 

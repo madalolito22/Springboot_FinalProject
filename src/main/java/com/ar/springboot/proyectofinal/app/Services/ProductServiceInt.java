@@ -10,9 +10,9 @@ public interface ProductServiceInt {
 
     Product findById(Long id);
 
-    Product create(Long id, String name, Long price);
+    void create(Long id, String name, Long price);
 
-    Product update(Long id);
+    void update(Long id, String name, Long price);
 
     void delete(Long id);
 

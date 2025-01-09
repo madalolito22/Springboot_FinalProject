@@ -46,7 +46,7 @@ public class Product {
         this.priceWithTaxes = priceWithTaxes;
     }
 
-    private Long priceWithTaxes() {
+    public Long priceWithTaxes() {
         return (long) (this.price * 1.21);
     }
 

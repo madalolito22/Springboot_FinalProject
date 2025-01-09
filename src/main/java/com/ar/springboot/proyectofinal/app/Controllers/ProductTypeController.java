@@ -4,24 +4,41 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 
-import com.ar.springboot.proyectofinal.app.Model.ProductType;
+import com.ar.springboot.proyectofinal.app.Services.ProductTypeServiceImpl;
 
 @Controller
 public class ProductTypeController {
 
-    List<ProductType> tipoProductos = rellenarTipoProductos();
+    private ProductTypeServiceImpl service;
 
-    private List<ProductType> rellenarTipoProductos() {
+     public ProductTypeController(ProductTypeServiceImpl service) {
+        this.service = service;
+    }
 
-        ArrayList<ProductType> tipoProductos = new ArrayList<ProductType>();
+    @GetMapping("/productTypes")
+    public String mostrarProductos(Model model) {
 
-        tipoProductos.add(new ProductType(1L, "Mesa", "Diferentes tipos de mesa para comedor"));
-        tipoProductos.add(new ProductType(2L, "Televisor", "Módulos para poner un televisor"));
-        tipoProductos.add(new ProductType(3L, "Silla", "Diferentes tipos de sillas y sillones"));
-        tipoProductos.add(new ProductType(4L, "Sofá", "Tresllo, sofá modular y chaiselonge"));
+        List<String> atributos = anyadirAntributos();
 
-        return tipoProductos;
+        model.addAttribute("atributos", atributos);
+        model.addAttribute("tipoProductos", service.findAll());
+
+        return "productTypes";
+    }
+
+    private List<String> anyadirAntributos() {
+
+        List<String> atributos = new ArrayList<>();
+
+        atributos.add("Id");
+        atributos.add("Nombre");
+        atributos.add("Descripcion");
+
+        return atributos;
+
     }
 
 }

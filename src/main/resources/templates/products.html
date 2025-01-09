@@ -3,23 +3,29 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Listado Productos</title>
 
     <style>
-        table, th, td, tr {
-          text-align: center;
-            border: 1px solid black;
-            border-collapse: collapse;
-            padding: 10px;
-        }
-        table{
-          width: 100%;
-        }
+      table,
+      th,
+      td,
+      tr {
+        text-align: center;
+        border: 1px solid black;
+        border-collapse: collapse;
+        padding: 10px;
+      }
+      table {
+        width: 100%;
+      }
+      a {
+        text-decoration: none;
+      }
     </style>
-
   </head>
   <body>
     <h1>Listado de Productos</h1>
+
     <div>
       <a href="formNewProduct">
         <button>Nuevo Producto</button>
@@ -27,32 +33,37 @@
       <a href="productTypes">
         <button>Tipos de Producto</button>
       </a>
+    </div>
 
+    <br />
+
+    <div>
       <table th:if="${productos.size() != 0}">
         <thead>
-            <th th:each="atributo: ${atributos}" th:text="${atributo}"></th>
+          <th th:each="atributo: ${atributos}" th:text="${atributo}"></th>
         </thead>
         <tbody>
-            <tr th:each="producto: ${productos}">
-                <td th:text="${producto.id}"></td>
-                <td th:text="${producto.name}"></td>
-                <td th:text="${producto.name}"></td>
-                <td th:text="${producto.price}"></td>
-                <td th:text="${producto.priceWithTaxes}"></td>
-                <td>
-                  <a href="formNewProduct" th:text="${'Editar'}">
-                    Editar
-                  </a><span>|</span>
-                  <a href="">
-                    Eliminar
-                  </a>
-                </td>
-            </tr>
+          <tr th:each="producto: ${productos}">
+            <td th:text="${producto.id}"></td>
+            <td th:text="${producto.name}"></td>
+            <td th:text="${producto.name}"></td>
+            <td th:text="${producto.price}"></td>
+            <td th:text="${producto.priceWithTaxes}"></td>
+            <td>
+              <a
+                th:href="@{/formEditProduct(id=${producto.id})}"
+                th:text="'Editar'"
+              >
+                Editar
+              </a>
+              <span> |</span>
+              <a th:href="@{/deleteProduct(id=${producto.id})}"> Eliminar </a>
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>
 
-    <p th:if="${productos.size() == 0}">Hola</p>
-    
+    <p th:if="${productos.size() == 0}">La lista de productos está vacía</p>
   </body>
 </html>

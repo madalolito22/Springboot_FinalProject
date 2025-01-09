@@ -36,4 +36,14 @@ public class ProductType {
         this.description = description;
     }
 
+    @Override
+    public Object clone() {
+        try {
+            return super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+            return new ProductType(id, name, description);
+        }
+    }
+
 }

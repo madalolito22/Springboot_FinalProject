@@ -3,13 +3,45 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Tipos de productos</title>
+
+    <style>
+      table,
+      th,
+      td,
+      tr {
+        text-align: center;
+        border: 1px solid black;
+        border-collapse: collapse;
+        padding: 10px;
+      }
+      table {
+        width: 100%;
+      }
+    </style>
   </head>
   <body>
     <h1>Listado de Productos</h1>
 
+    <table th:if="${tipoProductos.size() != 0}">
+      <thead>
+        <th th:each="atributo: ${atributos}" th:text="${atributo}"></th>
+      </thead>
+      <tbody>
+        <tr th:each="tipoProducto: ${tipoProductos}">
+          <td th:text="${tipoProducto.id}"></td>
+          <td th:text="${tipoProducto.name}"></td>
+          <td th:text="${tipoProducto.description}"></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <br />
+
     <div>
-      <button>Productos</button>
+      <a href="products">
+        <button>Productos</button>
+      </a>
     </div>
   </body>
 </html>
